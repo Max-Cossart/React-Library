@@ -10,6 +10,7 @@ const Cart = ({ cart, changeQuantity, removeItem }) => {
         (item.salePrice || item.originalPrice) * item.quantity
       ).toFixed(2);
     });
+    return price;
   };
   return (
     <div id="books__body">
