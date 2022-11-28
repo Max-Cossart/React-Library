@@ -38,7 +38,7 @@ function App() {
     let counter = 0;
     cart.forEach((item) => {
       counter += item.quantity;
-    })
+    });
     return counter;
   }
 
@@ -49,7 +49,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Nav numberOfItems={numberOfItems}/>
+        <Nav numberOfItems={numberOfItems} />
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/books" render={() => <Books books={books} />} />
         <Route

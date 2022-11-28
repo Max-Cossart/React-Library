@@ -8,7 +8,7 @@ const Cart = ({ cart, changeQuantity, removeItem }) => {
     cart.forEach((item) => {
       price += +(
         (item.salePrice || item.originalPrice) * item.quantity
-      ).toFixed(2);
+      );
     });
     return price;
   };
@@ -95,7 +95,7 @@ const Cart = ({ cart, changeQuantity, removeItem }) => {
                 </div>
                 <div className="total__item total__price">
                   <span>Total</span>
-                  <span>${total()}</span>
+                  <span>${total().toFixed(2)}</span>
                 </div>
                 <button
                   className="btn btn__checkout no-cursor"
