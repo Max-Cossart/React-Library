@@ -12,40 +12,63 @@ function App() {
   const [cart, setCart] = useState([]);
 
   function addToCart(book) {
-    const dupeItem = cart.find(item => +item.id === +book.id)
-    if (dupeItem) {
-      setCart(cart.map(item => {
-        if (item.id === dupeItem.id) {
+    setCart([...cart, { ...book, quantity: 1 }]);
+  }
+
+  function changeQuantity(book, quantity) {
+    setCart(
+      cart.map((item) => {
+        if (item.id === book.id) {
           return {
             ...item,
-            quantity: item.quantity + 1
-          }
+            quantity: +quantity,
+          };
+        } else {
+          return { item };
         }
-        else {
-          return item
-        }
-      }))
-    }
-    else {
-      setCart([...cart, {...book, quantity : 1}])
-    }
+      })
+    );
+  }
+
+  function removeItem(item) {
+    setCart(cart.filter((book) => book.id !== item.id));
+  }
+
+  function numberOfItems() {
+    let counter = 0;
+    cart.forEach((item) => {
+      counter += item.quantity;
+    })
+    return counter;
   }
 
   useEffect(() => {
-      console.log(cart)
-    }, [cart]);
+    console.log(cart);
+  }, [cart]);
 
   return (
     <Router>
       <div className="App">
-        <Nav />
+        <Nav numberOfItems={numberOfItems}/>
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/books" render={() => <Books books={books} />} />
         <Route
           path="/books/:id"
-          render={() => <BookInfo books={books} addToCart={addToCart} />}
+          render={() => (
+            <BookInfo books={books} cart={cart} addToCart={addToCart} />
+          )}
         />
-        <Route path="/cart" render={() => <Cart books={books} />} />
+        <Route
+          path="/cart"
+          render={() => (
+            <Cart
+              books={books}
+              cart={cart}
+              changeQuantity={changeQuantity}
+              removeItem={removeItem}
+            />
+          )}
+        />
         <Footer />
       </div>
     </Router>
